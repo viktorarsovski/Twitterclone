@@ -1,6 +1,8 @@
 <h1>Tweets</h1>
 <ul>
 <% @tweets.each do |tweet| %>
-<li><%= tweet.title %></li>
+<li>
+      <%= link_to tweet.title, tweet_path(tweet) %>
+    </li>
 <% end %>
 </ul>
