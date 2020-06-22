@@ -8,13 +8,18 @@ class TweetsController < ApplicationController
   end
 
   def new
+    @tweet = Tweet.new
   end
 
   def create
     tweet = Tweet.new(tweet_params)
-    tweet.save
 
     redirect_to tweet
+    if tweet.save
+      redirect_to @tweet
+    else
+      render :new
+    end
   end
 
   private

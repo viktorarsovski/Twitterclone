@@ -1,5 +1,18 @@
 <h1> New Tweet </h1>
 
+<% if @tweet.errors.any? %>
+<div id="error_explanation">
+  <h2>
+    <%= pluralize(@tweet.errors.count, "error") %> Prohibited this tweet from being saved:
+  </h2>
+
+  <ul>
+    <% @tweet.errors.full_messages.each do |msg| %>
+      <li><%= msg %></li>
+    <% end %>
+  </ul>
+</div>
+<% end %>
 
 <%= form_with scope: :tweet, url: '/tweets', local: true do |form| %>
   <p>
