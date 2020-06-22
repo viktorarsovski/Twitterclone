@@ -12,10 +12,9 @@ class TweetsController < ApplicationController
   end
 
   def create
-    tweet = Tweet.new(tweet_params)
+    @tweet = Tweet.new(tweet_params)
 
-    redirect_to tweet
-    if tweet.save
+    if @tweet.save
       redirect_to @tweet
     else
       render :new
