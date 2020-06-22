@@ -1,6 +1,8 @@
 Rails.application.routes.draw do
 
   get 'tweets/index', to: 'tweets#index'
+  post '/tweets', to: 'tweets#create'
+  get '/tweets/new', to: 'tweets#new', as: :new_tweet
   get '/tweets/:id', to: 'tweets#show', as: :tweet
 
   root to: 'tweets#index'
