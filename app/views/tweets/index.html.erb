@@ -6,30 +6,6 @@
       </div>
     </div>
 
-   <% @tweets.each do |tweet| %>
-      <div class="column is-6 is-offset-3">
-        <div class="card">
-          <header class="card-header">
-            <p class="card-header-title">
-              <%= tweet.title %>
-            </p>
-          </header>
-          <div class="card-content">
-            <div class="content">
-              <p><%= tweet.body %></p>
-            </div>
-          </div>
-          <footer class="card-footer">
-            <%= link_to "Show", tweet_path(tweet), class: "card-footer-item" %>
-
-            <%= link_to "Edit", edit_tweet_path(tweet), class: "card-footer-item" %>
-
-            <%= link_to "Delete", tweet_path(tweet), method: :delete,
-                data: { confirm: "Are you sure you want to delete this tweet?" },
-                class: "card-footer-item" %>
-          </footer>
-        </div>
-      </div>
-    <% end %>
+    <%= render @tweets %>
   </div>
 </div>

@@ -1,0 +1,28 @@
+<div class="column is-6 is-offset-3">
+  <div class="card">
+    <% unless local_assigns[:show] %>
+      <header class="card-header">
+          <p class="card-header-title">
+            <%= tweet.title %>
+          </p>
+      </header>
+    <% end %>
+    <div class="card-content">
+      <div class="content">
+        <p><%= tweet.body %></p>
+      </div>
+    </div>
+    <footer class="card-footer">
+      <% if local_assigns[:show] %>
+        <%= link_to "Back", root_path, class: "card-footer-item" %>
+      <% else %>
+        <%= link_to "Show", tweet_path(tweet), class: "card-footer-item" %>
+      <% end %>
+      <%= link_to "Edit", edit_tweet_path(tweet), class: "card-footer-item" %>
+
+      <%= link_to "Delete", tweet_path(tweet), method: :delete,
+          data: { confirm: "Are you sure you want to delete this tweet?" },
+          class: "card-footer-item" %>
+    </footer>
+  </div>
+</div>
