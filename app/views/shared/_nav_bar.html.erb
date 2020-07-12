@@ -20,13 +20,13 @@
         <p class="alert"><%= alert %></p>
       </div>
     <% end %>
-    <nav class="navbar is-info">
+    <nav class="navbar is-dark">
       <span>
       <i class="fab fa-twitter icon is-large"></i>
       </span>
       <div class="navbar-brand"></div>
       <%= link_to root_path, class: "navbar-item" do %>
-        <h1  class="title is-4">Twitter</h1>
+        <div class="title is-5 button is-info">Twitter</div>
       <% end %>
       <div class="navbar-burger burger" data-target="navbarExample">
           <span></span>
@@ -39,7 +39,7 @@
         <div class="navbar-end">
         <div class="field is-grouped">
            <p class="control">
-           <%= link_to 'New Tweet', new_tweet_path, class: "button is-light is-rounded" %>
+           <%= link_to 'New Tweet', new_tweet_path, class: "button is-info is-rounded" %>
            </p>
         </div>
       </div>
