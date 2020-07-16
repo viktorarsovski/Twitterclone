@@ -5,12 +5,14 @@ class CommentsController < ApplicationController
   end
 
   def create
-    tweet = Tweet.find(params[:tweet_id])
+    @tweet = Tweet.find(params[:tweet_id])
+    @comment = @tweet.comments.build(comment_params)
 
-    comment = tweet.comments.build(comment_params)
-
-    comment.save
-    redirect_to tweet
+    if @comment.save
+      redirect_to @tweet
+    else
+      render :new
+    end
   end
 
   private
