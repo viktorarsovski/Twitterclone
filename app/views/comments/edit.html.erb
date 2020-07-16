@@ -2,7 +2,7 @@
   <div class="columns is-multiline">
     <div class="column is-6 is-offset-3">
       <div class="content is-size-3">
-        <h1><%= @tweet.title %> - New Comment</h1>
+        <h1>Edit <%= @tweet.title %>'s comment</h1>
       </div>
     </div>
 
@@ -41,7 +41,7 @@
               </div>
               <div class="level-right">
                 <div class="level-item">
-                  <%= form.submit "Save", class: 'button is-info' %>
+                  <%= form.submit "Update", class: 'button is-info' %>
                 </div>
                 <div class="level-item">
                   <%= link_to "Cancel", tweet_path(@tweet), class: 'button is-light' %>
