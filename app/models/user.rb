@@ -3,6 +3,8 @@ class User < ApplicationRecord
 
   has_secure_password
 
+  has_many :tweets, dependent: :destroy
+
   before_save :email_to_downcase
 
   validates :name, presence: true, length: { maximum: 255 }
