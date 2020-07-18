@@ -1,6 +1,5 @@
 class TweetsController < ApplicationController
   def index
-    session_notice(:danger, 'You must be logged in!') unless logged_in?
     @tweets = Tweet.all
   end
 
@@ -9,6 +8,7 @@ class TweetsController < ApplicationController
   end
 
   def new
+    session_notice(:danger, 'You must be logged in!') unless logged_in?
     @tweet = Tweet.new
   end
 

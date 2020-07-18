@@ -1,5 +1,6 @@
 class CommentsController < ApplicationController
   def new
+    session_notice(:danger, 'You must be logged in!') unless logged_in?
     @tweet = Tweet.find(params[:tweet_id])
     @comment = @tweet.comments.build
   end
