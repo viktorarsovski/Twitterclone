@@ -1,6 +1,6 @@
 FactoryBot.define do
   factory :tweet do
-    user
+    user 
 
     title { 'Learning Rails' }
   end

@@ -20,5 +20,7 @@ RSpec.describe Tweet do
   describe 'validations' do
     it { should validate_presence_of(:title) }
     it { should validate_length_of(:title).is_at_least(Tweet::MINIMUM_TITLE_LENGTH) }
+    it { should validate_presence_of(:body) }
+    it { should validate_length_of(:body).is_at_most(Tweet::MAKSIMUM_BODY_LENGTH) }
   end
 end
