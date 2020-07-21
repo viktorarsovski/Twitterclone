@@ -22,7 +22,7 @@
         <%= link_to "Edit", edit_tweet_path(tweet), class: "card-footer-item" %>
       <% end %>
 
-       <% if local_assigns[:show] %>
+       <% if local_assigns[:show] && logged_in? %>
         <%= link_to "New Comment", new_tweet_comment_path(tweet), class: "card-footer-item" %>
       <% end %>
 

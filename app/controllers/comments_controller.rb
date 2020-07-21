@@ -8,6 +8,7 @@ class CommentsController < ApplicationController
   def create
     @tweet = Tweet.find(params[:tweet_id])
     @comment = @tweet.comments.build(comment_params)
+    @comment.user = current_user
 
     if @comment.save
       redirect_to @tweet
@@ -17,7 +18,12 @@ class CommentsController < ApplicationController
   end
 
   def edit
+    session_notice(:danger, 'You must be logged in!', login_path) unless logged_in?
     @comment = Comment.find(params[:id])
+
+    if logged_in?
+      session_notice(:danger, 'Wrong User') unless equal_with_current_user?(@comment.user)
+    end
     @tweet = @comment.tweet
   end
 
@@ -33,10 +39,16 @@ class CommentsController < ApplicationController
   end
 
   def destroy
-    comment = Comment.find(params[:id])
-    comment.destroy
+    session_notice(:danger, 'You must be logged in!', login_path) unless logged_in?
 
-    redirect_to comment.tweet
+    comment = Comment.find(params[:id])
+
+    if equal_with_current_user?(comment.user)
+      comment.destroy
+      redirect_to comment.tweet
+    else
+      session_notice(:danger, 'Wrong User')
+    end
   end
 
   private
