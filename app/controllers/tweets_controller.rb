@@ -43,7 +43,9 @@ class TweetsController < ApplicationController
   end
 
   def destroy
-    session_notice(:danger, 'You must be logged in!') unless logged_in?
+    unless logged_in?
+      session_notice(:danger, 'You must be logged in!') and return
+    end
 
     tweet = Tweet.find(params[:id])
 
@@ -51,7 +53,7 @@ class TweetsController < ApplicationController
       tweet.destroy
       redirect_to tweets_path
     else
-      session_notice(:danger, 'Wrong User')
+      session_notice(:danger, 'Wrong User')  and return
     end
   end
 
