@@ -44,7 +44,7 @@ RSpec.describe "Comments" do
 
         patch tweet_comment_path(tweet, comment), patch_params
 
-        expect(response).to redirect_to(login_path)
+        expect(response).to redirect_to(root_path)
         expect(flash[:danger]).to eq 'Wrong User'
       end
 

@@ -15,7 +15,7 @@ RSpec.describe "Tweets" do
         post '/tweets', post_params
 
         expect(response).to redirect_to(login_path)
-        expect(flash[:danger]).to eq 'You must be logged in!'
+        expect(flash[:danger]).to eq 'Please sign in to continue.'
       end
     end
   end
@@ -99,8 +99,8 @@ RSpec.describe "Tweets" do
       it 'redirect back to root path' do
         get "/tweets/#{tweet.id}/edit"
 
-        expect(flash[:danger]).to eq 'You must be logged in!'
-        expect(response).to redirect_to(root_path)
+        expect(flash[:danger]).to eq 'Please sign in to continue.'
+        expect(response).to redirect_to(login_path)
       end
 
       it 'redirect back to root when updating a tweet' do
@@ -115,8 +115,8 @@ RSpec.describe "Tweets" do
 
         patch "/tweets/#{tweet.id}", patch_params
 
-        expect(flash[:danger]).to eq 'You must be logged in!'
-        expect(response).to redirect_to(root_path)
+        expect(flash[:danger]).to eq 'Please sign in to continue.'
+        expect(response).to redirect_to(login_path)
       end
     end
   end
@@ -157,8 +157,8 @@ RSpec.describe "Tweets" do
       it 'redirect back to root path' do
         delete "/tweets/#{tweet.id}"
 
-        expect(flash[:danger]).to eq 'You must be logged in!'
-        expect(response).to redirect_to(root_path)
+        expect(flash[:danger]).to eq 'Please sign in to continue.'
+        expect(response).to redirect_to(login_path)
       end
     end
   end

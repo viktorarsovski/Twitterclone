@@ -1,21 +1,21 @@
 class TweetsController < ApplicationController
+  skip_before_action :require_login, only: [:index, :show]
+  before_action :find_tweet, except: [:index, :new, :create]
+
   def index
     @tweets = Tweet.all
   end
 
   def show
-    @tweet = Tweet.find(params[:id])
+
   end
 
   def new
-    session_notice(:danger, 'You must be logged in!') unless logged_in?
+
     @tweet = Tweet.new
   end
 
   def create
-    unless logged_in?
-      session_notice(:danger, 'You must be logged in!', login_path) and return
-    end
 
     @tweet = Tweet.new(tweet_params)
     @tweet.user = current_user
@@ -28,44 +28,31 @@ class TweetsController < ApplicationController
   end
 
   def edit
-    session_notice(:danger, 'You must be logged in!') unless logged_in?
-    @tweet = Tweet.find(params[:id])
-
-    if logged_in?
-      session_notice(:danger, 'Wrong User') unless equal_with_current_user?(@tweet.user)
+    unless equal_with_current_user?(@tweet.user)
+      flash[:danger] = 'Wrong User'
+      redirect_to(root_path) and return
     end
   end
 
   def update
-    unless logged_in?
-    session_notice(:danger, 'You must be logged in!') and return
+    unless equal_with_current_user?(@tweet.user)
+      flash[:danger] = 'Wrong User'
+      redirect_to(root_path) and return
     end
 
-    @tweet = Tweet.find(params[:id])
-
-    if equal_with_current_user?(@tweet.user)
-      if @tweet.update(tweet_params)
-        redirect_to @tweet
-      else
-        render :edit
-      end
+    if @tweet.update(tweet_params)
+      redirect_to @tweet
     else
-      session_notice(:danger, 'Wrong User') and return
+      render :edit
     end
   end
 
   def destroy
-    unless logged_in?
-      session_notice(:danger, 'You must be logged in!') and return
-    end
-
-    tweet = Tweet.find(params[:id])
-
-    if equal_with_current_user?(tweet.user)
-      tweet.destroy
-      redirect_to tweets_path
+    if equal_with_current_user?(@tweet.user)
+      @tweet.destroy
     else
-      session_notice(:danger, 'Wrong User')  and return
+      flash[:danger] = 'Wrong User'
+      redirect_to(root_path)
     end
   end
 
@@ -73,5 +60,9 @@ class TweetsController < ApplicationController
 
   def tweet_params
     params.require(:tweet).permit(:title, :body)
+  end
+
+  def find_tweet
+    @tweet = Tweet.find(params[:id])
   end
 end
