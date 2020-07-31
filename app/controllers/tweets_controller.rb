@@ -39,7 +39,7 @@ class TweetsController < ApplicationController
   def update
     unless logged_in?
     session_notice(:danger, 'You must be logged in!') and return
-  end
+    end
 
     @tweet = Tweet.find(params[:id])
 

@@ -29,16 +29,7 @@ RSpec.describe "Tweets" do
         get '/login'
         expect(response).to have_http_status(:ok)
 
-        post_params = {
-          params: {
-            session: {
-              email: user.email,
-              password: user.password
-            }
-          }
-        }
-
-        post '/login', post_params
+        log_in(user)
 
         follow_redirect!
         expect(flash[:success]).to eq "Welcome #{user.name} !"
@@ -75,19 +66,8 @@ RSpec.describe "Tweets" do
 
       let(:login_user) { create(:user) }
 
+      before { log_in(login_user) }
       it 'redirect back when GET edit' do
-        get '/login'
-
-        post_params = {
-          params: {
-            session: {
-              email: login_user.email,
-              password: login_user.password
-            }
-          }
-        }
-
-        post '/login', post_params
 
         get "/tweets/#{tweet.id}/edit"
 
@@ -96,18 +76,6 @@ RSpec.describe "Tweets" do
       end
 
       it 'redirect back when PATCH edit' do
-        get '/login'
-
-        post_params = {
-          params: {
-            session: {
-              email: login_user.email,
-              password: login_user.password
-            }
-          }
-        }
-
-        post '/login', post_params
 
         patch_params = {
           params: {
@@ -159,20 +127,7 @@ RSpec.describe "Tweets" do
       let(:tweet) { create(:tweet, user: user) }
 
       it 'can delete the tweet' do
-        get '/login'
-
-        post_params = {
-          params: {
-            session: {
-              email: user.email,
-              password: user.password
-            }
-          }
-        }
-
-        post '/login', post_params
-
-        follow_redirect!
+        log_in(user)
 
         delete "/tweets/#{tweet.id}"
 
@@ -187,20 +142,7 @@ RSpec.describe "Tweets" do
       let(:login_user) { create(:user) }
 
       it 'redirect back to root path' do
-        get '/login'
-
-        post_params = {
-          params: {
-            session: {
-              email: login_user.email,
-              password: login_user.password
-            }
-          }
-        }
-
-        post '/login', post_params
-
-        follow_redirect!
+        log_in(login_user)
 
         delete "/tweets/#{tweet.id}"
 
