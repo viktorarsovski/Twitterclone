@@ -1,6 +1,7 @@
 class TweetsController < ApplicationController
   skip_before_action :require_login, only: [:index, :show]
   before_action :find_tweet, except: [:index, :new, :create]
+  before_action :correct_user, only: [:edit, :update, :destroy]
 
   def index
     @tweets = Tweet.all
@@ -28,17 +29,10 @@ class TweetsController < ApplicationController
   end
 
   def edit
-    unless equal_with_current_user?(@tweet.user)
-      flash[:danger] = 'Wrong User'
-      redirect_to(root_path) and return
-    end
+
   end
 
   def update
-    unless equal_with_current_user?(@tweet.user)
-      flash[:danger] = 'Wrong User'
-      redirect_to(root_path) and return
-    end
 
     if @tweet.update(tweet_params)
       redirect_to @tweet
@@ -48,12 +42,8 @@ class TweetsController < ApplicationController
   end
 
   def destroy
-    if equal_with_current_user?(@tweet.user)
-      @tweet.destroy
-    else
-      flash[:danger] = 'Wrong User'
-      redirect_to(root_path)
-    end
+    @tweet.destroy
+    redirect_to tweets_path
   end
 
   private
@@ -64,5 +54,12 @@ class TweetsController < ApplicationController
 
   def find_tweet
     @tweet = Tweet.find(params[:id])
+  end
+
+  def correct_user
+    unless equal_with_current_user?(@tweet.user)
+      flash[:danger] = 'Wrong User'
+      redirect_to(root_path)
+    end
   end
 end

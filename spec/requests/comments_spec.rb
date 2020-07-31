@@ -128,7 +128,7 @@ RSpec.describe "Comments" do
         expect(response).to redirect_to(article_path(tweet))
       end
 
-      it 'cannot delete different user comment on a different user article' do
+      it 'cannot delete different user comment on a different user tweet' do
         delete tweet_comment_path(tweet, different_comment)
 
         expect(flash[:danger]).to eq 'Wrong User'
